@@ -1,0 +1,10 @@
+; The deriver's errors: errors.t runs the driver on wrong declarations and
+; reads where and what it reports.
+
+(executable
+ (name driver)
+ (libraries causet.ppx ppxlib))
+
+(cram
+ (package causet)
+ (deps driver.exe))

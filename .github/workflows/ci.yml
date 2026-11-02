@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ocaml/setup-ocaml@v3
+        with:
+          ocaml-compiler: "5.3.0"
+      - run: opam install . --deps-only --with-test --with-doc
+      - run: opam install ocamlformat.0.27.0
+      - run: opam exec -- dune build @fmt
+      # Warnings are errors in the default dev profile.
+      - run: opam exec -- dune build
+      - name: The opam files match dune-project
+        run: git diff --exit-code -- '*.opam'
+      - run: opam lint causet.opam causet-reporting.opam
+      # Unit, integration, example and documentation (mdx) tests.
+      - run: opam exec -- dune test
+      - run: opam exec -- dune build @doc

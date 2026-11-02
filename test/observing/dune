@@ -1,0 +1,10 @@
+(tests
+ (package causet)
+ (names
+  test_refusals
+  test_observers
+  test_review_observer_edges
+  test_harness
+  test_faults
+  test_logger)
+ (libraries causet causet.guide causet.observers logs alcotest threads.posix))

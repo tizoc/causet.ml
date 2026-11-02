@@ -1,0 +1,12 @@
+(tests
+ (package causet)
+ (names
+  test_acceptance
+  test_generate
+  test_generate_edges
+  test_harness
+  test_in_flight
+  test_invariant_edges
+  test_invariants
+  test_queue_order)
+ (libraries causet causet.guide causet.test alcotest threads.posix))

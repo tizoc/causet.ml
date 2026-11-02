@@ -1,0 +1,5 @@
+(library
+ (name wallet_send)
+ (libraries causet)
+ (preprocess
+  (pps causet.ppx)))

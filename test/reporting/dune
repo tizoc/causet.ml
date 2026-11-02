@@ -1,0 +1,6 @@
+(tests
+ (names test_reporting)
+ (package causet-reporting)
+ (libraries causet-reporting alcotest yojson unix threads.posix)
+ (deps
+  (glob_files *.txt)))

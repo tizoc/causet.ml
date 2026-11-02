@@ -1,0 +1,5 @@
+(library
+ (name p2p)
+ (libraries causet)
+ (preprocess
+  (pps causet.ppx)))

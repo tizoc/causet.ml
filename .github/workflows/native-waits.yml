@@ -1,0 +1,31 @@
+name: Native waits
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ocaml/setup-ocaml@v3
+        with:
+          ocaml-compiler: "5.3.0"
+      - run: opam install . --deps-only --with-test
+      - name: Build native wait tests
+        run: opam exec -- dune build test/events/test_readiness.exe test/events/test_timer.exe test/events/test_review_timer_edges.exe
+      - name: Readiness
+        run: opam exec -- dune exec test/events/test_readiness.exe
+      - name: Timers
+        run: opam exec -- dune exec test/events/test_timer.exe
+      - name: Timer regressions
+        run: opam exec -- dune exec test/events/test_review_timer_edges.exe

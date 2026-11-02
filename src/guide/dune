@@ -1,0 +1,6 @@
+(library
+ (name causet_guide)
+ (public_name causet.guide)
+ (libraries causet)
+ (preprocess
+  (pps causet.ppx)))

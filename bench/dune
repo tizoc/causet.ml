@@ -1,0 +1,15 @@
+(executable
+ (name baseline)
+ (modules baseline)
+ (libraries causet causet.observers logs threads.posix unix)
+ (ocamlopt_flags
+  (:standard -O3 -inline 200))
+ (preprocess
+  (pps causet.ppx)))
+
+(executable
+ (name reporting)
+ (modules reporting)
+ (libraries causet-reporting unix)
+ (ocamlopt_flags
+  (:standard -O3 -inline 200)))

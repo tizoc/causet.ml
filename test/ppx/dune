@@ -1,0 +1,6 @@
+(test
+ (package causet)
+ (name test_derive)
+ (libraries causet alcotest)
+ (preprocess
+  (pps causet.ppx)))

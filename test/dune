@@ -1,0 +1,9 @@
+(tests
+ (package causet)
+ (names test_xxh3 test_kernel test_conformance test_pending)
+ (libraries causet causet.guide guarded alcotest)
+ (preprocess
+  (pps causet.ppx))
+ (deps
+  xxh3_vectors.txt
+  (glob_files conformance/*.txt)))

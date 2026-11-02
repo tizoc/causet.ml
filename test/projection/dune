@@ -1,0 +1,4 @@
+(tests
+ (package causet)
+ (names test_projection)
+ (libraries causet.projection alcotest))

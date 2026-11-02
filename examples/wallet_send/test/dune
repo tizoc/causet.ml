@@ -1,0 +1,5 @@
+(tests
+ (package causet)
+ (names transitions deadlines probe_lifecycle generated)
+ (modules transitions deadlines probe_lifecycle generated common sim)
+ (libraries causet causet.test wallet_send alcotest))

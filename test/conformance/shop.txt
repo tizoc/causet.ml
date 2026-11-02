@@ -1,0 +1,28 @@
+scenario one-order
+exec 1 time 1000 Action /cart cart.add causal 1 origin - answers - depth 1
+exec 2 time 1000 Action /cart cart.checkout causal 2 origin - answers - depth 1
+exec 3 time 1000 Action / shop.pay causal 2 origin 2/ba5537b0c3b05b03/0/0 answers - depth 2
+exec 4 time 1000 Action /payments payments.charge causal 3 origin 3/474292953285562e/0/0 answers - depth 3
+exec 5 time 1000 Effect /payments payments.charge causal 4 origin 4/cc41b01163b88142/0/0 answers - depth 4
+exec 6 time 1000 Event /payments payments.charged causal 6 origin - answers 5 depth 1
+exec 7 time 1000 Action /payments payments.settled causal 6 origin 6/cc41b01163b88142/0/0 answers - depth 2
+state paid [4] declined [] pending 0 orders 1 cart [] 0
+scenario declined-and-refused
+exec 1 time 1000 Action /cart cart.add causal 1 origin - answers - depth 1
+exec 2 time 1000 Action /cart cart.add causal 2 origin - answers - depth 1
+exec 3 time 1000 Action /cart cart.checkout causal 3 origin - answers - depth 1
+exec 4 time 1000 Action / shop.pay causal 3 origin 3/ba5537b0c3b05b03/0/0 answers - depth 2
+exec 5 time 1000 Action /payments payments.charge causal 4 origin 4/474292953285562e/0/0 answers - depth 3
+exec 6 time 1000 Effect /payments payments.charge causal 5 origin 5/cc41b01163b88142/0/0 answers - depth 4
+exec 7 time 1000 Action /cart cart.add causal 7 origin - answers - depth 1
+exec 8 time 1000 Action /cart cart.checkout causal 8 origin - answers - depth 1
+exec 9 time 1000 Action / shop.pay causal 8 origin 8/ba5537b0c3b05b03/0/0 answers - depth 2
+exec 10 time 1000 Action /payments payments.charge causal 9 origin 9/474292953285562e/0/0 answers - depth 3
+exec 11 time 1000 Effect /payments payments.charge causal 10 origin 10/cc41b01163b88142/0/0 answers - depth 4
+exec 12 time 1000 Event /payments payments.charged causal 12 origin - answers 6 depth 1
+exec 13 time 1000 Action /payments payments.settled causal 12 origin 12/cc41b01163b88142/0/0 answers - depth 2
+exec 14 time 1000 Action /cart cart.add causal 14 origin - answers - depth 1
+exec 15 time 1000 Event /payments payments.charged causal 15 origin - answers 11 depth 1
+exec 16 time 1000 Action /payments payments.settled causal 15 origin 15/cc41b01163b88142/0/0 answers - depth 2
+refused /cart cart.checkout root by component at 1000
+state paid [64] declined [150] pending 0 orders 2 cart ["cup"] 3

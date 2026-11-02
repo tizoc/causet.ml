@@ -1,0 +1,9 @@
+(tests
+ (package causet)
+ (names
+  test_parity
+  test_findings
+  test_generated
+  test_restarts
+  test_incremental)
+ (libraries chain_placement causet.projection causet.test alcotest))

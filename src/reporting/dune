@@ -1,0 +1,4 @@
+(library
+ (name causet_reporting)
+ (public_name causet-reporting)
+ (libraries threads.posix unix yojson))

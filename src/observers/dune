@@ -1,0 +1,4 @@
+(library
+ (name causet_observers)
+ (public_name causet.observers)
+ (libraries causet logs))

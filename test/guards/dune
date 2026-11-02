@@ -1,0 +1,16 @@
+; The root-guard tests and the tree they share with the conformance trace
+; (../test_conformance.ml), the Rust port's tests/root_guards.rs and
+; tests/guarded/mod.rs.
+
+(library
+ (name guarded)
+ (modules guarded)
+ (libraries causet)
+ (preprocess
+  (pps causet.ppx)))
+
+(tests
+ (package causet)
+ (names test_root_guards)
+ (modules test_root_guards)
+ (libraries causet guarded alcotest))

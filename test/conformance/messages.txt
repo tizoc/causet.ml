@@ -1,0 +1,6 @@
+kettle.action kettle.switch_on info SwitchOn { target_celsius: 100, keep_warm: true, label: "green \"tea\"" } | target_celsius=100 label=green "tea"
+kettle.action kettle.emptied debug Clear |
+kettle.action kettle.heater.warm debug Heater(Warm { max_secs: 90, last_reading: Some(-4) }) | max_secs=90
+kettle.action kettle.heater.warm debug Heater(Warm { max_secs: 5, last_reading: None }) | max_secs=5
+kettle.action kettle.heater.off debug Heater(Cut) |
+kettle.alarm kettle.dry warn DryAlarm { dry_secs: 3, recent_readings: [21, -4] } | dry_secs=3

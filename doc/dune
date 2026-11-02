@@ -1,0 +1,40 @@
+(documentation
+ (package causet)
+ (mld_files index))
+
+; The guide's OCaml examples (https://tizoc.github.io/causet/), one
+; file per page of the guide, which shows each block by the name above it;
+; mdx runs them all. Components
+; that derive their messages are synced from examples/, compiled with the
+; deriver, and the prelude opens them.
+
+(mdx
+ (package causet)
+ (files
+  overview.md
+  messages.md
+  authority.md
+  scheduling.md
+  addressing.md
+  running.md
+  timeouts.md
+  determinism.md
+  observability.md
+  projections.md
+  testing.md)
+ (libraries
+  causet
+  causet.guide
+  causet.test
+  causet.projection
+  causet.observers
+  causet-reporting
+  causet_doc_examples)
+ (preludes
+  prelude.ml
+  prelude_messages.ml
+  prelude_running.ml
+  prelude_timeouts.ml
+  prelude_observability.ml
+  prelude_projections.ml
+  prelude_testing.ml))

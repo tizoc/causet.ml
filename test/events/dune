@@ -1,0 +1,10 @@
+(tests
+ (package causet)
+ (names
+  test_bus
+  test_held
+  test_timer
+  test_review_timer_edges
+  test_services
+  test_readiness)
+ (libraries causet causet.guide alcotest threads.posix unix))

@@ -1,0 +1,17 @@
+; The guide pages' components, compiled with the message deriver: mdx's
+; toplevel cannot run a ppx, so each page shows a file from here, and its
+; examples run against it through ../prelude.ml. One file per block shown,
+; and scheduling_root_guard.ml, the tree a block runs on without showing it.
+
+(library
+ (name causet_doc_examples)
+ (libraries
+  causet
+  causet.test
+  causet.projection
+  causet.observers
+  causet-reporting)
+ (flags
+  (:standard -open Causet))
+ (preprocess
+  (pps causet.ppx)))

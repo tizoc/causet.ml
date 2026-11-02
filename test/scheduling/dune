@@ -1,0 +1,8 @@
+(tests
+ (package causet)
+ (names
+  test_scheduling_order
+  test_composite
+  test_clock
+  test_review_clock_edges)
+ (libraries causet causet.guide alcotest threads.posix))

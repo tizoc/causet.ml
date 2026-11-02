@@ -1,0 +1,17 @@
+(library
+ (name causet)
+ (public_name causet)
+ (private_modules
+  wakeup
+  kernel_types
+  kernel_readiness
+  kernel_observe
+  kernel_state
+  kernel_schedule
+  kernel_context
+  kernel_bus
+  kernel_registry
+  kernel_effect
+  kernel_store
+  kernel_harness)
+ (libraries threads.posix unix mtime mtime.clock.os))

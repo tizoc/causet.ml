@@ -1,0 +1,4 @@
+(library
+ (name causet_test)
+ (public_name causet.test)
+ (libraries causet))

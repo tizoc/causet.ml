@@ -1,0 +1,72 @@
+{0 Causet}
+
+Causet is a framework for building event-driven systems as explicit,
+composable state machines, with automatic bug finding through deterministic
+simulation.
+
+You define the operations your system can perform and the rules it must
+obey. Causet generates simulated test runs that vary inputs, event delivery,
+time and modeled failures. It checks your invariants after every input,
+shrinks failing runs and gives you the choices needed to reproduce them.
+
+It addresses a common problem in asynchronous software: the behavior of a
+system becomes scattered across callbacks, tasks, timers and shared state.
+Understanding a transition means reconstructing what ran, in which order,
+and which request a late result belonged to, and testing those
+interactions reliably is hard.
+
+Causet gives that behavior one structure. Each component owns a piece of
+State and changes it only in its reducer, in answer to an Action. It never
+touches the world directly: it asks for work with Effects, which Services
+carry out, and hears back through Events. So the same components run
+against the real world or a simulated one:
+
+{v
+          In production                     In a test
+
+   ┌─────────────────────────┐     ┌─────────────────────────┐
+   │ network, disk, clock    │     │ simulated network, disk │
+   │                         │     │ and a virtual clock     │
+   └──────▲───────────┬──────┘     └──────▲───────────┬──────┘
+          │ Effects   │ Events            │ Effects   │ Events
+   ┌──────┴───────────▼──────┐     ┌──────┴───────────▼──────┐
+   │ your components:        │     │ the same components;    │
+   │ one input at a time,    │     │ the test decides what   │
+   │ in a fixed order        │     │ arrives, and when       │
+   └─────────────────────────┘     └─────────────────────────┘
+v}
+
+A Store runs the components one input at a time, in a fixed order, with
+time from its own clock. So a test can deliver answers in any order it
+likes, generate thousands of runs, and repeat a failing one exactly.
+
+The cost is more explicit code: every asynchronous step is a named
+message, and every lifecycle is State. It pays off when the hard parts are
+ordering, timeouts, retries, cancellation and stale results, as in network
+protocols, wallets and synchronization engines.
+
+{1 Where to start}
+
+Read {{:https://tizoc.github.io/causet/}the guide}, shared with the Rust and TypeScript ports. Its overview covers the
+problem, the model, and one checkout's journey through the guide's example
+shop, message by message, then how a test takes control of it. The pages
+after it give the rules: authority, scheduling, addressing, determinism and
+testing. Every example in it runs here as a test, from [doc/*.md].
+
+Most examples use {!Causet_guide.Shop}, a small application with a cart, a
+payment component and a gateway Service. It is ordinary code: read its
+source.
+
+{1 Libraries}
+
+- {!Causet}: components, the Registry and Protocol, the Store and its
+  scheduler, contexts, mounts, the Event bus, the clock, the timer Service,
+  observers, bug reports and invariants.
+- [causet.ppx]: [[@@deriving message]] and [[@@deriving debug]].
+- {!Causet_observers}: logging through [logs], and execution statistics.
+- {!Causet_projection}: projections of an ordered log into derived facts.
+- {!Causet_test}: testing and simulation on the real Store.
+- {!Causet_guide}: the guide's shop.
+
+The reporting pipeline is a package of its own, [causet-reporting]: it
+knows nothing of the Store, and an application wires it in as a Service.

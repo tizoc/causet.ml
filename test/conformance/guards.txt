@@ -1,0 +1,68 @@
+scenario root-guards
+outcomes disabled executed executed executed executed executed executed executed executed executed disabled executed executed executed executed executed executed executed executed executed executed executed disabled executed executed disabled disabled disabled executed disabled executed executed executed
+exec 1 time 1000 Action /mid/leaf leaf.again causal 1 origin - answers - depth 1
+exec 2 time 1000 Action /mid mid.send causal 2 origin - answers - depth 1
+exec 3 time 1000 Event /mid/leaf leaf.bumped causal 3 origin - answers - depth 1
+exec 4 time 1000 Action /mid/leaf leaf.ask causal 4 origin - answers - depth 1
+exec 5 time 1000 Action /mid/leaf/tip tip.report causal 4 origin 4/63af3c80b173f921/0/0 answers - depth 2
+exec 6 time 1000 Action /mid/leaf leaf.echo causal 6 origin - answers - depth 1
+exec 7 time 1000 Effect /mid/leaf leaf.echo causal 6 origin 6/63af3c80b173f921/0/0 answers - depth 2
+exec 8 time 1000 Action /mid/leaf leaf.add causal 8 origin - answers - depth 1
+exec 9 time 1000 Action /mid/leaf leaf.again causal 9 origin - answers - depth 1
+exec 10 time 1000 Action /mid/leaf leaf.add causal 9 origin 9/63af3c80b173f921/0/0 answers - depth 2
+exec 11 time 1000 Action /mid mid.send causal 11 origin - answers - depth 1
+exec 12 time 1000 Action /mid/leaf leaf.add causal 11 origin 11/7e77d25f4d0a7a49/0/0 answers - depth 2
+exec 13 time 1000 Event /mid/leaf leaf.bumped causal 13 origin - answers - depth 1
+exec 14 time 1000 Action /mid/leaf leaf.add causal 13 origin 13/63af3c80b173f921/0/0 answers - depth 2
+exec 15 time 1000 Action /mid/leaf leaf.ask causal 15 origin - answers - depth 1
+exec 16 time 1000 Action /mid/leaf/tip tip.report causal 15 origin 15/63af3c80b173f921/0/0 answers - depth 2
+exec 17 time 1000 Action /mid/leaf leaf.add causal 16 origin 16/e29b49ca4393ec75/0/0 answers - depth 3
+exec 18 time 1000 Action /mid/leaf leaf.echo causal 18 origin - answers - depth 1
+exec 19 time 1000 Effect /mid/leaf leaf.echo causal 18 origin 18/63af3c80b173f921/0/0 answers - depth 2
+exec 20 time 1000 Action /mid/leaf leaf.add causal 19 origin 19/63af3c80b173f921/0/0 answers - depth 3
+exec 21 time 1000 Action / app.mid causal 21 origin - answers - depth 1
+exec 22 time 1000 Action / app.mid causal 22 origin - answers - depth 1
+exec 23 time 1000 Action / app.block_then_forward causal 23 origin - answers - depth 1
+exec 24 time 1000 Action / app.block causal 24 origin - answers - depth 1
+exec 25 time 1000 Action / app.mid causal 25 origin - answers - depth 1
+exec 26 time 1000 Action / app.mid causal 26 origin - answers - depth 1
+exec 27 time 1000 Action / app.mid causal 27 origin - answers - depth 1
+exec 28 time 1000 Action / app.spare causal 28 origin - answers - depth 1
+exec 29 time 1000 Action /other mid.forward causal 29 origin - answers - depth 1
+exec 30 time 1000 Action /other mid.forward causal 30 origin - answers - depth 1
+exec 31 time 1000 Action /other mid.forward causal 31 origin - answers - depth 1
+exec 32 time 1000 Action / app.block causal 32 origin - answers - depth 1
+exec 33 time 1000 Action / app.block causal 33 origin - answers - depth 1
+exec 34 time 1000 Action /mid mid.drop_leaf causal 34 origin - answers - depth 1
+exec 35 time 1000 Action /mid mid.send causal 35 origin - answers - depth 1
+exec 36 time 1000 Action /other mid.drop_leaf causal 36 origin - answers - depth 1
+exec 37 time 1000 Action /other mid.forward causal 37 origin - answers - depth 1
+refused /mid/leaf leaf.add root by root-guard at 1000
+refused /mid/leaf leaf.add queued 1/63af3c80b173f921/0/0 by root-guard at 1000
+refused /mid/leaf leaf.add queued 2/7e77d25f4d0a7a49/0/0 by root-guard at 1000
+refused /mid/leaf leaf.add queued 3/63af3c80b173f921/0/0 by root-guard at 1000
+refused /mid/leaf leaf.add queued 5/e29b49ca4393ec75/0/0 by root-guard at 1000
+refused /mid/leaf leaf.add effect 7 by root-guard at 1000
+refused /mid mid.forward root by root-guard at 1000
+refused /mid mid.forward inline 21 by root-guard at 1000
+refused /mid mid.forward inline 23 by root-guard at 1000
+refused /mid mid.forward inline 25 by root-guard at 1000
+refused /mid mid.forward inline 26 by guard at 1000
+refused /mid mid.forward inline 27 by component at 1000
+refused /spare mid.forward inline 28 by absent at 1000
+refused /other/leaf leaf.add inline 30 by guard at 1000
+refused /other/leaf leaf.add inline 31 by component at 1000
+refused /other/leaf leaf.add root by root-guard at 1000
+refused /mid/leaf leaf.add root by guard at 1000
+refused /mid/leaf leaf.add root by root-guard at 1000
+refused /mid/leaf leaf.add root by root-guard at 1000
+refused /mid/leaf leaf.add root by absent at 1000
+refused /mid/leaf leaf.add queued 35/7e77d25f4d0a7a49/0/0 by absent at 1000
+refused /other/leaf leaf.add inline 37 by absent at 1000
+inline /mid mid.forward within 22
+inline /mid/leaf leaf.add within 22 root-guard-skipped
+inline /other/leaf leaf.add within 29 root-guard-skipped
+totals before the drops mid 8 other 7
+state mid - other -
+calls mid reduced
+calls other reduced refused refused refused

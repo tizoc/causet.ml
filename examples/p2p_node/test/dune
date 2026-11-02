@@ -1,0 +1,4 @@
+(tests
+ (package causet)
+ (names contracts generated)
+ (libraries causet causet.test p2p p2p_node alcotest))

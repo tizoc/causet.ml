@@ -1,0 +1,5 @@
+(library
+ (name chain_placement)
+ (libraries causet causet.projection)
+ (preprocess
+  (pps causet.ppx)))

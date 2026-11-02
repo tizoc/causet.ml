@@ -1,0 +1,6 @@
+_build/
+*.install
+.DS_Store
+# Local scratchpads: the plan and design notes. Never committed.
+/local/
+_build_wallet/

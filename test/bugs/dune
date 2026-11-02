@@ -1,0 +1,10 @@
+(tests
+ (package causet)
+ (names
+  test_bugs
+  test_invariants
+  test_review
+  test_review_hardening
+  test_review_followup
+  test_guide_faults)
+ (libraries causet causet.guide alcotest threads.posix))
